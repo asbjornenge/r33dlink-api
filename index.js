@@ -2,22 +2,30 @@ import fs          from 'fs'
 import path        from 'path'
 import htmlToText  from 'html-to-text'
 import readability from 'easy-read'
+import textract    from 'textract'
 import url         from 'url'
 import http        from 'http'
 import request     from 'request'
 
-let getTextFromHtml = (html, callback) => {
-    readability(html, (res) => {
-        let text = htmlToText.fromString(res.content, {ignoreHref: true, ignoreImage: true})
-        callback(text)
-    })
+let supportedContentTypes = {
+    'text/html' : (html, callback) => {
+        readability(html, (res) => {
+            let text = htmlToText.fromString(res.content, {ignoreHref: true, ignoreImage: true})
+            callback(text)
+        })
+    },
+    'application/pdf' : (pdf, callback) => {
+        textract.fromBufferWithMime('application/pdf', pdf, { preserveLineBreaks : true }, (err, text) => {
+            if (err) throw err
+            callback(text)
+        })
+    }
 }
 
-let supportedContentTypes = ['text/html']
 let supportedContentType = (headers) => {
-    return supportedContentTypes.reduce((res, ctt) => {
+    return Object.keys(supportedContentTypes).reduce((res, ctt) => {
         if (res) return res
-        return headers['content-type'].indexOf(ctt) >= 0
+        if (headers['content-type'].indexOf(ctt) >= 0) return ctt
     }, false)
 }
 
@@ -37,21 +45,24 @@ let server = http.createServer((req, res) => {
     let _good = good.bind(undefined, res)
     if (_req.pathname != '/') return _bad('Bad path')
     if (!_req.query.link) return _bad('Missing link')
+    let link = _req.query.link
+    let options = {}
+    if (link.indexOf('.pdf') > 0) options.encoding = null
     try {
-        request.get(_req.query.link, (err, _res) => {
+        request.get(_req.query.link, options, (err, _res) => {
             if (err) return _bad(err.toString())
             if (_res.statusCode != 200) 
                 return _bad('Bad response from link')
-            if (!supportedContentType(_res.headers)) 
-                return _bad('Unsupported Content Type')
-            return getTextFromHtml(_res.body, _good)
+            let ctt = supportedContentType(_res.headers) 
+            if (!ctt) return _bad('Unsupported Content Type')
+            return supportedContentTypes[ctt](_res.body, _good) 
         })
     } catch(err) {
         return _bad(err.toString())
     }
 })
 
-server.listen(1337, '127.0.0.1', () => {
-    console.log('Listening to 127.0.0.1:1337')
+server.listen(1337, '0.0.0.0', () => {
+    console.log('Listening to 0.0.0.0:1337')
 })
 
