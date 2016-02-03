@@ -5,7 +5,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "babel-node server/index.js"
+    "start": "babel-node index.js"
   },
   "author": "Asbjorn Enge <asbjorn@hanafjedle.net>",
   "license": "GPL",
@@ -13,7 +13,8 @@
     "easy-read": "^0.1.7",
     "html-to-text": "^1.6.0",
     "query-string": "^3.0.0",
-    "request": "^2.69.0"
+    "request": "^2.69.0",
+    "textract": "^1.2.1"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13"
