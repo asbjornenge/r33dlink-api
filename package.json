@@ -1,0 +1,29 @@
+{
+  "name": "readmylink-api",
+  "version": "1.0.0",
+  "description": "ReadMyLink API",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node server/index.js"
+  },
+  "author": "Asbjorn Enge <asbjorn@hanafjedle.net>",
+  "license": "GPL",
+  "dependencies": {
+    "easy-read": "^0.1.7",
+    "html-to-text": "^1.6.0",
+    "query-string": "^3.0.0",
+    "request": "^2.69.0"
+  },
+  "devDependencies": {
+  },
+  "babel": {
+    "env": {
+      "development": {
+        "presets": [
+          "es2015"
+        ]
+      }
+    }
+  }
+}
