@@ -5,4 +5,4 @@ ADD build.js /app/index.js
 ADD package.json /app
 WORKDIR /app
 RUN npm install
-CMD ["node", "index.js"]
+CMD ["node","index.js"]
