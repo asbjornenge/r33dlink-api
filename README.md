@@ -1,3 +1,3 @@
-# ReadMyLink API
+# r33d.link API
 
-WIP
+API for [r33d.link](http://r33d.link).
