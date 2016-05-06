@@ -81,6 +81,7 @@ var server = _http2.default.createServer(function (req, res) {
     var link = _req.query.link;
     var options = {};
     if (link.indexOf('.pdf') > 0) options.encoding = null;
+    options.gzip = true;
     try {
         _request2.default.get(_req.query.link, options, function (err, _res) {
             if (err) return _bad(err.toString());
