@@ -54,6 +54,7 @@ let server = http.createServer((req, res) => {
     let link = _req.query.link
     let options = {}
     if (link.indexOf('.pdf') > 0) options.encoding = null
+    options.gzip = true
     try {
         request.get(_req.query.link, options, (err, _res) => {
             if (err) return _bad(err.toString())
