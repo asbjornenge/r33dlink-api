@@ -98,4 +98,3 @@ var server = _http2.default.createServer(function (req, res) {
 server.listen(1337, '0.0.0.0', function () {
     console.log('Listening to 0.0.0.0:1337');
 });
-

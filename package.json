@@ -5,16 +5,19 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js"
+    "dev": "babel-node index.js",
+    "start": "node build.js",
+    "build": "babel index.js -o build.js"
   },
   "author": "Asbjorn Enge <asbjorn@hanafjedle.net>",
   "license": "GPL",
   "dependencies": {
     "easy-read": "^0.1.7",
-    "html-to-text": "^1.6.0",
-    "query-string": "^3.0.0",
-    "request": "^2.69.0",
-    "textract": "^1.2.1"
+    "html-to-text": "^1.6.2",
+    "query-string": "^3.0.3",
+    "request": "^2.72.0",
+    "textract": "^1.2.1",
+    "jsdom": "8.5.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13"
