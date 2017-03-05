@@ -1,5 +1,5 @@
 {
-  "name": "readmylink-api",
+  "name": "r33dlink-api",
   "version": "1.0.0",
   "description": "ReadMyLink API",
   "private": true,
@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "babel-node index.js",
     "start": "node build.js",
-    "build": "babel index.js -o build.js"
+    "build": "babel index.js -o build.js",
+    "deploy": "now --docker"
   },
   "author": "Asbjorn Enge <asbjorn@hanafjedle.net>",
   "license": "GPL",
